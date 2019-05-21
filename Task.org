@@ -1,0 +1,45 @@
+* 2048 Task List
+  List of things that should be done on this project.
+** Main
+   Features that should've been implemented on this project.
+*** Core
+**** TODO Scoring system
+**** TODO No move condition
+**** TODO Win condition
+**** TODO Lose condition
+**** TODO Reset feature
+*** Visual
+**** TODO Game Board
+**** TODO Reusable rounded rectangle
+**** TODO Efficient redrawing (Reduce redraw a static component)
+** Additional
+   Good to have feature
+*** Core
+**** TODO High score
+**** TODO Continue game after win
+**** TODO Save / load game state
+*** Visual 
+**** TODO Animated movement
+**** TODO Dynamic board dimension
+**** TODO Dialogue [0/4] [0%]
+     - [ ] On exit
+     - [ ] On win
+     - [ ] On reset
+     - [ ] On lose
+**** TODO Fix resources [0/3] [0%]
+     - [ ] Fonts
+     - [ ] Icon
+     - [ ] Sound
+**** TODO Add sound effects [0/5] [0%]
+     - [ ] slide
+     - [ ] unable to slide
+     - [ ] win
+     - [ ] lose
+     - [ ] big number
+*** Etc
+**** TODO README files [0/4] [0%]
+     - [ ] Manual
+     - [ ] Screenshot
+     - [ ] Gameplay (gif/video)
+     - [ ] Downloadable binary
+
