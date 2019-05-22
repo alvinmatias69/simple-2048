@@ -14,7 +14,8 @@
 **** DONE Game Board
      CLOSED: [2019-05-22 Rab 21:20]
 **** TODO Reusable rounded rectangle
-**** TODO Efficient redrawing (Reduce redraw a static component)
+**** DONE Efficient redrawing (Reduce redraw a static component)
+     CLOSED: [2019-05-23 Kam 00:25]
 ** Additional
    Good to have feature
 *** Core
