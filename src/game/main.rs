@@ -4,6 +4,8 @@
 use super::board::{Board, BoardInterface};
 use crate::input::Input;
 
+use super::display::board;
+use super::display::config;
 use super::display::header;
 use event::KeyCode;
 use ggez::{conf, event, graphics, input, timer, Context, ContextBuilder, GameResult};
@@ -18,7 +20,7 @@ pub struct Game {
 }
 
 impl event::EventHandler for Game {
-    fn update(&mut self, ctx: &mut Context) -> GameResult {
+    fn update(&mut self, _ctx: &mut Context) -> GameResult {
         if self.moved {
             self.moved = false;
             let direction: Input;
@@ -40,16 +42,11 @@ impl event::EventHandler for Game {
         header::draw_title(ctx)?;
         header::draw_subtitle(ctx)?;
         header::draw_score(ctx, 0)?;
+        board::draw_board(ctx)?;
+        board::draw_tiles(ctx, &self.board.field)?;
 
         if self.updated {
             self.updated = false;
-            for row in self.board.field.iter() {
-                for item in row.iter() {
-                    print!("[{}]", item);
-                }
-                println!("");
-            }
-            println!("");
         }
 
         graphics::present(ctx)?;
@@ -114,8 +111,8 @@ impl Game {
                 srgb: true,
             })
             .window_mode(conf::WindowMode {
-                width: 400.0,
-                height: 600.0,
+                width: config::WINDOW_WIDTH,
+                height: config::WINDOW_HEIGHT,
                 maximized: false,
                 fullscreen_type: conf::FullscreenType::Windowed,
                 borderless: true,

@@ -9,7 +9,8 @@
 **** TODO Lose condition
 **** TODO Reset feature
 *** Visual
-**** TODO Game Board
+**** DONE Game Board
+     CLOSED: [2019-05-22 Rab 21:20]
 **** TODO Reusable rounded rectangle
 **** TODO Efficient redrawing (Reduce redraw a static component)
 ** Additional

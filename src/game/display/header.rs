@@ -1,3 +1,4 @@
+use super::config;
 use ggez::nalgebra::Point2;
 use ggez::{graphics, Context, GameResult};
 use graphics::{draw, Color, DrawParam, Mesh, Scale, Text, TextFragment};
@@ -11,7 +12,7 @@ pub fn draw_title(ctx: &mut Context) -> GameResult {
     draw(
         ctx,
         &text,
-        DrawParam::default().dest(Point2::new(15.0, 15.0)),
+        DrawParam::default().dest(Point2::new(config::MARGIN, config::MARGIN)),
     )?;
 
     Ok(())
@@ -26,7 +27,7 @@ pub fn draw_subtitle(ctx: &mut Context) -> GameResult {
     draw(
         ctx,
         &text,
-        DrawParam::default().dest(Point2::new(15.0, 70.0)),
+        DrawParam::default().dest(Point2::new(config::MARGIN, 70.0)),
     )?;
 
     Ok(())
@@ -39,7 +40,7 @@ pub fn draw_score(ctx: &mut Context, score: u32) -> GameResult {
     let rect = Mesh::new_rectangle(
         ctx,
         graphics::DrawMode::fill(),
-        graphics::Rect::new(box_x, 15., 95., 45.),
+        graphics::Rect::new(box_x, config::MARGIN, 95., 45.),
         Color::from_rgb(187, 173, 160),
     )?;
     draw(ctx, &rect, DrawParam::default())?;
