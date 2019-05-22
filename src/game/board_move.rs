@@ -22,7 +22,7 @@ impl BoardMove {
         board_move
     }
 
-    pub fn moved(&mut self) -> Vec<Vec<u32>> {
+    pub fn moved(&mut self) -> Result<Vec<Vec<u32>>, &'static str> {
         let y_list: Vec<usize>;
         let x_list: Vec<usize>;
 
@@ -45,8 +45,11 @@ impl BoardMove {
             }
         }
 
-        self.process_move(y_list, x_list);
-        self.clone_field()
+        if self.process_move(y_list, x_list) {
+            Ok(self.clone_field())
+        } else {
+            Err("No tile moved")
+        }
     }
 
     fn clone_field(&self) -> Vec<Vec<u32>> {
@@ -61,7 +64,8 @@ impl BoardMove {
         field
     }
 
-    fn process_move(&mut self, y_list: Vec<usize>, x_list: Vec<usize>) {
+    fn process_move(&mut self, y_list: Vec<usize>, x_list: Vec<usize>) -> bool {
+        let mut moved = false;
         for y in y_list.iter() {
             let mut added_list: Vec<bool> = vec![false; self.width + self.height];
             for x in x_list.iter() {
@@ -88,12 +92,14 @@ impl BoardMove {
                 }
 
                 if position != *x && value != 0 {
+                    moved = true;
                     added_list[position] = added;
                     self.set_value(*y, position, value);
                     self.set_value(*y, *x, 0);
                 }
             }
         }
+        moved
     }
 
     fn get_index(&self, x: usize) -> i32 {

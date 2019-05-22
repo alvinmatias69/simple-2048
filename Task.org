@@ -5,7 +5,8 @@
 *** Core
 **** DONE Scoring system
      CLOSED: [2019-05-22 Rab 23:43]
-**** TODO No move condition
+**** DONE No move condition
+     CLOSED: [2019-05-23 Kam 00:23]
 **** TODO Win condition
 **** TODO Lose condition
 **** TODO Reset feature

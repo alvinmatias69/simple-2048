@@ -30,23 +30,21 @@ impl event::EventHandler for Game {
                 Input::Left => direction = Input::Left,
                 Input::Right => direction = Input::Right,
             }
-            self.updated = true;
-            self.board.move_to(direction);
+            self.updated = self.board.move_to(direction);
         }
 
         Ok(())
     }
 
     fn draw(&mut self, ctx: &mut Context) -> GameResult {
-        graphics::clear(ctx, graphics::Color::from_rgb(240, 236, 223));
-        header::draw_title(ctx)?;
-        header::draw_subtitle(ctx)?;
-        header::draw_score(ctx, self.board.score)?;
-        board::draw_board(ctx)?;
-        board::draw_tiles(ctx, &self.board.field)?;
-
         if self.updated {
             self.updated = false;
+            graphics::clear(ctx, graphics::Color::from_rgb(240, 236, 223));
+            header::draw_title(ctx)?;
+            header::draw_subtitle(ctx)?;
+            header::draw_score(ctx, self.board.score)?;
+            board::draw_board(ctx)?;
+            board::draw_tiles(ctx, &self.board.field)?;
         }
 
         graphics::present(ctx)?;
@@ -93,7 +91,7 @@ impl Game {
         let board = BoardInterface::new(width, height);
         let game = Game {
             board,
-            updated: false,
+            updated: true,
             moved: false,
             direction: Input::Up,
         };

@@ -13,7 +13,7 @@ pub struct Board {
 pub trait BoardInterface {
     fn new(width: u32, height: u32) -> Self;
     fn is_finished(&self) -> bool;
-    fn move_to(&mut self, direction: Input);
+    fn move_to(&mut self, direction: Input) -> bool;
 }
 
 impl BoardInterface for Board {
@@ -44,7 +44,7 @@ impl BoardInterface for Board {
         self.empty.is_empty()
     }
 
-    fn move_to(&mut self, direction: Input) {
+    fn move_to(&mut self, direction: Input) -> bool {
         let mut field: Vec<Vec<u32>> = Vec::with_capacity(self.height);
         for y in 0..self.height {
             let mut row: Vec<u32> = Vec::with_capacity(self.width);
@@ -55,10 +55,16 @@ impl BoardInterface for Board {
         }
 
         let mut board_move = BoardMove::new(field, direction);
-        self.field = board_move.moved();
-        self.score += board_move.score;
-        self.update_empty();
-        self.spawn_random_number();
+        match board_move.moved() {
+            Ok(field) => {
+                self.field = field;
+                self.score += board_move.score;
+                self.update_empty();
+                self.spawn_random_number();
+                true
+            }
+            Err(_) => false,
+        }
     }
 }
 
