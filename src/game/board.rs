@@ -4,6 +4,7 @@ use crate::input::Input;
 
 pub struct Board {
     pub field: Vec<Vec<u32>>,
+    pub score: u32,
     width: usize,
     height: usize,
     empty: Vec<(usize, usize)>,
@@ -29,6 +30,7 @@ impl BoardInterface for Board {
 
         let mut board = Board {
             field,
+            score: 0,
             empty,
             width: width as usize,
             height: height as usize,
@@ -54,6 +56,7 @@ impl BoardInterface for Board {
 
         let mut board_move = BoardMove::new(field, direction);
         self.field = board_move.moved();
+        self.score += board_move.score;
         self.update_empty();
         self.spawn_random_number();
     }

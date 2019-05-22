@@ -41,7 +41,7 @@ impl event::EventHandler for Game {
         graphics::clear(ctx, graphics::Color::from_rgb(240, 236, 223));
         header::draw_title(ctx)?;
         header::draw_subtitle(ctx)?;
-        header::draw_score(ctx, 0)?;
+        header::draw_score(ctx, self.board.score)?;
         board::draw_board(ctx)?;
         board::draw_tiles(ctx, &self.board.field)?;
 

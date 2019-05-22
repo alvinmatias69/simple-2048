@@ -5,6 +5,7 @@ pub struct BoardMove {
     direction: Input,
     width: usize,
     height: usize,
+    pub score: u32,
 }
 
 impl BoardMove {
@@ -16,6 +17,7 @@ impl BoardMove {
             direction,
             height,
             width,
+            score: 0,
         };
         board_move
     }
@@ -77,6 +79,7 @@ impl BoardMove {
                         added = true;
                         value *= 2;
                         position = index as usize;
+                        self.score += value;
                     } else {
                         stop = true;
                     }

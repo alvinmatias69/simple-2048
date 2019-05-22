@@ -3,7 +3,8 @@
 ** Main
    Features that should've been implemented on this project.
 *** Core
-**** TODO Scoring system
+**** DONE Scoring system
+     CLOSED: [2019-05-22 Rab 23:43]
 **** TODO No move condition
 **** TODO Win condition
 **** TODO Lose condition
