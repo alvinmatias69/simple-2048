@@ -52,8 +52,11 @@ impl event::EventHandler for Game {
             header::draw_score(ctx, self.board.score)?;
             board::draw_board(ctx)?;
             board::draw_tiles(ctx, &self.board.field)?;
-            if self.win && !self.continue_game {
-                menu::draw_win(ctx)?;
+            // if self.win && !self.continue_game {
+            //     menu::draw(ctx, true)?;
+            // }
+            if self.lose {
+                menu::draw(ctx, false)?;
             }
         }
 
@@ -115,16 +118,20 @@ impl event::EventHandler for Game {
     }
 
     fn mouse_button_down_event(&mut self, ctx: &mut Context, _button: MouseButton, x: f32, y: f32) {
-        if self.win
-            && !self.continue_game
-            && x >= config::WIN_BUTTON_POSITION.0
-            && x <= config::WIN_BUTTON_POSITION.0 + config::WIN_BUTTON_SIZE.0
-            && y >= config::WIN_BUTTON_POSITION.1
-            && y <= config::WIN_BUTTON_POSITION.1 + config::WIN_BUTTON_SIZE.1
+        if x >= config::MENU_BUTTON_POSITION.0
+            && x <= config::MENU_BUTTON_POSITION.0 + config::MENU_BUTTON_SIZE.0
+            && y >= config::MENU_BUTTON_POSITION.1
+            && y <= config::MENU_BUTTON_POSITION.1 + config::MENU_BUTTON_SIZE.1
         {
-            self.continue_game = true;
-            self.updated = true;
-            mouse::set_cursor_hidden(ctx, true);
+            if self.win && !self.continue_game {
+                self.continue_game = true;
+                self.updated = true;
+                mouse::set_cursor_hidden(ctx, true);
+            } else if self.lose {
+                self.reset(ctx);
+                self.updated = true;
+                mouse::set_cursor_hidden(ctx, true);
+            }
         }
     }
 }
