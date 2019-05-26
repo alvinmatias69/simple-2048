@@ -1,8 +1,10 @@
 # 2048
+![gameplay](2048.png)
+
 A simple 2048 game implemented using [ggez](https://ggez.rs/).
 
 ## How To Play
-Download compiled binary, then extract it.
+Download compiled [binary](2048.zip), then extract it.
 ```sh
 $ unzip 2048.zip
 ```
