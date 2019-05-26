@@ -17,6 +17,8 @@ pub struct Game {
     updated: bool,
     moved: bool,
     direction: Input,
+    width: u32,
+    height: u32,
 }
 
 impl event::EventHandler for Game {
@@ -81,6 +83,13 @@ impl event::EventHandler for Game {
                     ggez::quit(ctx);
                 }
             }
+            KeyCode::N => {
+                if keymods.contains(KeyMods::CTRL) {
+                    let board: Board = BoardInterface::new(self.width, self.height);
+                    self.board = board;
+                    self.updated = true;
+                }
+            }
             _ => {}
         }
     }
@@ -94,6 +103,8 @@ impl Game {
             updated: true,
             moved: false,
             direction: Input::Up,
+            width,
+            height,
         };
         game
     }

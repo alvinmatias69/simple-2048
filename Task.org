@@ -9,7 +9,8 @@
      CLOSED: [2019-05-23 Kam 00:23]
 **** TODO Win condition
 **** TODO Lose condition
-**** TODO Reset feature
+**** DONE Reset feature
+     CLOSED: [2019-05-26 Min 12:23]
 *** Visual
 **** DONE Game Board
      CLOSED: [2019-05-22 Rab 21:20]
