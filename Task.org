@@ -7,7 +7,8 @@
      CLOSED: [2019-05-22 Rab 23:43]
 **** DONE No move condition
      CLOSED: [2019-05-23 Kam 00:23]
-**** TODO Win condition
+**** DONE Win condition
+     CLOSED: [2019-05-26 Min 12:53]
 **** TODO Lose condition
 **** DONE Reset feature
      CLOSED: [2019-05-26 Min 12:23]

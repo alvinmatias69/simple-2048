@@ -6,6 +6,7 @@ pub struct BoardMove {
     width: usize,
     height: usize,
     pub score: u32,
+    pub highest_tile: u32,
 }
 
 impl BoardMove {
@@ -18,6 +19,7 @@ impl BoardMove {
             height,
             width,
             score: 0,
+            highest_tile: 0,
         };
         board_move
     }
@@ -82,6 +84,9 @@ impl BoardMove {
                     } else if current == value && !added && !added_list[index as usize] {
                         added = true;
                         value *= 2;
+                        if value > self.highest_tile {
+                            self.highest_tile = value;
+                        }
                         position = index as usize;
                         self.score += value;
                     } else {

@@ -8,6 +8,7 @@ pub struct Board {
     width: usize,
     height: usize,
     empty: Vec<(usize, usize)>,
+    pub highest_tile: u32,
 }
 
 pub trait BoardInterface {
@@ -34,6 +35,7 @@ impl BoardInterface for Board {
             empty,
             width: width as usize,
             height: height as usize,
+            highest_tile: 0,
         };
 
         board.spawn_random_number();
@@ -61,6 +63,9 @@ impl BoardInterface for Board {
                 self.score += board_move.score;
                 self.update_empty();
                 self.spawn_random_number();
+                if board_move.highest_tile > self.highest_tile {
+                    self.highest_tile = board_move.highest_tile;
+                }
                 true
             }
             Err(_) => false,

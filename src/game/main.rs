@@ -47,6 +47,9 @@ impl event::EventHandler for Game {
             header::draw_score(ctx, self.board.score)?;
             board::draw_board(ctx)?;
             board::draw_tiles(ctx, &self.board.field)?;
+            if self.board.highest_tile > 1024 {
+                println!("win");
+            }
         }
 
         graphics::present(ctx)?;
