@@ -3,3 +3,4 @@ pub mod board_move;
 pub mod display;
 pub mod main;
 pub mod random;
+pub mod sound;

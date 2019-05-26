@@ -5,6 +5,8 @@ use super::board::{Board, BoardInterface};
 use crate::input::Input;
 
 use super::display::{board, config, header, menu};
+use super::sound;
+use sound::SoundType;
 
 use event::KeyCode;
 use ggez::{conf, event, graphics, input, timer, Context, ContextBuilder, GameResult};
@@ -25,7 +27,7 @@ pub struct Game {
 }
 
 impl event::EventHandler for Game {
-    fn update(&mut self, _ctx: &mut Context) -> GameResult {
+    fn update(&mut self, ctx: &mut Context) -> GameResult {
         if self.moved {
             self.moved = false;
             let direction: Input;
@@ -38,6 +40,16 @@ impl event::EventHandler for Game {
             self.updated = self.board.move_to(direction);
             self.lose = self.board.is_finished();
             self.win = self.board.highest_tile > 1024;
+
+            if self.win && !self.continue_game {
+                sound::play(ctx, SoundType::Win)?;
+            } else if self.lose {
+                sound::play(ctx, SoundType::Lose)?;
+            } else if self.updated {
+                sound::play(ctx, SoundType::Move)?;
+            } else {
+                sound::play(ctx, SoundType::UnableToMove)?;
+            }
         }
 
         Ok(())
@@ -127,10 +139,12 @@ impl event::EventHandler for Game {
                 self.continue_game = true;
                 self.updated = true;
                 mouse::set_cursor_hidden(ctx, true);
+                sound::play(ctx, SoundType::Menu);
             } else if self.lose {
                 self.reset(ctx);
                 self.updated = true;
                 mouse::set_cursor_hidden(ctx, true);
+                sound::play(ctx, SoundType::Menu);
             }
         }
     }
@@ -160,7 +174,7 @@ impl Game {
                 samples: conf::NumSamples::Zero,
                 vsync: true,
                 transparent: false,
-                icon: "".to_owned(),
+                icon: "/2048.ico".to_owned(),
                 srgb: true,
             })
             .window_mode(conf::WindowMode {
@@ -178,6 +192,7 @@ impl Game {
             });
 
         let (ref mut ctx, ref mut event_loop) = &mut cb.build().unwrap();
+        sound::play(ctx, SoundType::Start);
         mouse::set_cursor_hidden(ctx, true);
         event::run(ctx, event_loop, self).unwrap();
     }
@@ -189,6 +204,7 @@ impl Game {
         self.lose = false;
         self.continue_game = false;
         self.updated = true;
+        sound::play(ctx, SoundType::Start);
         mouse::set_cursor_hidden(ctx, true);
     }
 

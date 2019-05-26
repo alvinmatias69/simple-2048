@@ -39,11 +39,11 @@
      - [ ] Fonts
      - [ ] Icon
      - [ ] Sound
-**** TODO Add sound effects [0/5] [0%]
-     - [ ] slide
-     - [ ] unable to slide
-     - [ ] win
-     - [ ] lose
+**** TODO Add sound effects [4/5] [80%]
+     - [X] slide
+     - [X] unable to slide
+     - [X] win
+     - [X] lose
      - [ ] big number
 *** Etc
 **** TODO README files [0/4] [0%]
