@@ -131,6 +131,7 @@ impl Board {
                     let cur_x = x as i32 + combination[x_idx];
                     if cur_x >= 0
                         && cur_x < self.width as i32
+                        && (x_idx == 1 || y_idx == 1)
                         && !(cur_x == x as i32 && cur_y == y as i32)
                     {
                         found = value == self.field[cur_y as usize][cur_x as usize];
