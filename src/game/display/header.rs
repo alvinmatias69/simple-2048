@@ -1,7 +1,7 @@
-use super::config;
+use super::{config, helper};
 use ggez::nalgebra::Point2;
 use ggez::{graphics, Context, GameResult};
-use graphics::{draw, Color, DrawParam, Mesh, Scale, Text, TextFragment};
+use graphics::{draw, Color, DrawParam, Scale, Text, TextFragment};
 
 pub fn draw_title(ctx: &mut Context) -> GameResult {
     let text_fragment = TextFragment::new("2048")
@@ -28,14 +28,14 @@ pub fn draw_subtitle(ctx: &mut Context) -> GameResult {
 }
 
 pub fn draw_score(ctx: &mut Context, score: u32) -> GameResult {
-    let (x, y) = config::SCOREBOARD_POSITION;
-    let rect = Mesh::new_rectangle(
+    helper::draw_rounded_rectangle(
         ctx,
-        graphics::DrawMode::fill(),
-        graphics::Rect::new(x, y, config::SCOREBOARD_WIDTH, config::SCOREBOARD_HEIGHT),
+        config::SCOREBOARD_POSITION,
+        config::SCOREBOARD_WIDTH,
+        config::SCOREBOARD_HEIGHT,
+        config::TILE_RADIUS,
         Color::from_rgb(187, 173, 160),
     )?;
-    draw(ctx, &rect, DrawParam::default())?;
 
     draw_score_title(ctx)?;
     draw_score_points(ctx, score)?;

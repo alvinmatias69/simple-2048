@@ -52,9 +52,9 @@ impl event::EventHandler for Game {
             header::draw_score(ctx, self.board.score)?;
             board::draw_board(ctx)?;
             board::draw_tiles(ctx, &self.board.field)?;
-            // if self.win && !self.continue_game {
-            //     menu::draw(ctx, true)?;
-            // }
+            if self.win && !self.continue_game {
+                menu::draw(ctx, true)?;
+            }
             if self.lose {
                 menu::draw(ctx, false)?;
             }

@@ -1,19 +1,19 @@
-use super::config;
+use super::{config, helper};
 use ggez::graphics;
 use ggez::nalgebra::Point2;
 use ggez::{Context, GameResult};
 use graphics::{Mesh, Text, TextFragment};
 
 pub fn draw_board(ctx: &mut Context) -> GameResult {
-    let (x, y) = config::BOARD_POSITION;
-
-    let rect = Mesh::new_rectangle(
+    helper::draw_rounded_rectangle(
         ctx,
-        graphics::DrawMode::fill(),
-        graphics::Rect::new(x, y, config::BOARD_SIZE, config::BOARD_SIZE),
+        config::BOARD_POSITION,
+        config::BOARD_SIZE,
+        config::BOARD_SIZE,
+        config::TILE_RADIUS,
         graphics::Color::from_rgb(187, 173, 160),
     )?;
-    graphics::draw(ctx, &rect, graphics::DrawParam::default())?;
+
     Ok(())
 }
 
@@ -36,13 +36,14 @@ pub fn draw_tiles(ctx: &mut Context, field: &Vec<Vec<u32>>) -> GameResult {
 fn draw_tile(ctx: &mut Context, position: (f32, f32), value: u32) -> GameResult {
     let (x, y) = position;
 
-    let rect = Mesh::new_rectangle(
+    helper::draw_rounded_rectangle(
         ctx,
-        graphics::DrawMode::fill(),
-        graphics::Rect::new(x, y, config::TILE_SIZE, config::TILE_SIZE),
+        position,
+        config::TILE_SIZE,
+        config::TILE_SIZE,
+        config::TILE_RADIUS,
         tile_color(value),
     )?;
-    graphics::draw(ctx, &rect, graphics::DrawParam::default())?;
 
     if value > 0 {
         let text_fragment = TextFragment::new(value.to_string())
