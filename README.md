@@ -41,5 +41,5 @@ $ ./target/release/simple-2048
 * Navigate Up: <kbd>w</kbd> / <kbd>k</kbd> / <kbd>&#8593;</kbd>
 * Navigate Down: <kbd>s</kbd> / <kbd>j</kbd> / <kbd>&#8595;</kbd>
 * Navigate Left: <kbd>a</kbd> / <kbd>h</kbd> / <kbd>&#8592;</kbd>
-* Navigate Right: <kbd>d</kbd> / <kbd>l</kdb> / <kbd>&#8594;</kbd>
+* Navigate Right: <kbd>d</kbd> / <kbd>l</kbd> / <kbd>&#8594;</kbd>
 * Exit: <kbd>ctrl</kbd> + <kbd>q</kbd>
