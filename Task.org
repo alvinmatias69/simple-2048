@@ -46,9 +46,9 @@
      - [X] lose
      - [ ] big number
 *** Etc
-**** TODO README files [0/4] [0%]
-     - [ ] Manual
-     - [ ] Screenshot
+**** TODO README files [3/4] [75%]
+     - [X] Manual
+     - [X] Screenshot
      - [ ] Gameplay (gif/video)
-     - [ ] Downloadable binary
+     - [X] Downloadable binary
 
