@@ -43,7 +43,7 @@ impl BoardInterface for Board {
     }
 
     fn is_finished(&self) -> bool {
-        self.empty.is_empty()
+        self.empty.is_empty() && !self.find_pair()
     }
 
     fn move_to(&mut self, direction: Input) -> bool {
@@ -100,5 +100,47 @@ impl Board {
             }
         }
         self.empty = empty;
+    }
+
+    fn find_pair(&self) -> bool {
+        let mut y: usize = 0;
+        let mut found = false;
+
+        while !found && y < self.height {
+            let mut x: usize = 0;
+            while !found && x < self.width {
+                found = self.check_pair(x, y);
+                x += 1;
+            }
+            y += 1;
+        }
+        found
+    }
+
+    fn check_pair(&self, x: usize, y: usize) -> bool {
+        let value = self.field[y][x];
+        let combination: [i32; 3] = [-1, 0, 1];
+        let mut found: bool = false;
+
+        let mut y_idx: usize = 0;
+        while !found && y_idx < 3 {
+            let mut x_idx: usize = 0;
+            let cur_y = y as i32 + combination[y_idx];
+            if cur_y >= 0 && cur_y < self.height as i32 {
+                while !found && x_idx < 3 {
+                    let cur_x = x as i32 + combination[x_idx];
+                    if cur_x >= 0
+                        && cur_x < self.width as i32
+                        && !(cur_x == x as i32 && cur_y == y as i32)
+                    {
+                        found = value == self.field[cur_y as usize][cur_x as usize];
+                    }
+                    x_idx += 1;
+                }
+            }
+            y_idx += 1;
+        }
+
+        found
     }
 }

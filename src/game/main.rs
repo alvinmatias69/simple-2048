@@ -33,6 +33,9 @@ impl event::EventHandler for Game {
                 Input::Right => direction = Input::Right,
             }
             self.updated = self.board.move_to(direction);
+            if self.board.is_finished() {
+                println!("finished");
+            }
         }
 
         Ok(())
