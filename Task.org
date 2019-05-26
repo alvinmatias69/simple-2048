@@ -23,14 +23,15 @@
    Good to have feature
 *** Core
 **** TODO High score
-**** TODO Continue game after win
+**** DONE Continue game after win
+     CLOSED: [2019-05-26 Min 18:48]
 **** TODO Save / load game state
 *** Visual 
 **** TODO Animated movement
 **** TODO Dynamic board dimension
-**** TODO Dialogue [0/4] [0%]
+**** TODO Dialogue [1/4] [25%]
      - [ ] On exit
-     - [ ] On win
+     - [X] On win
      - [ ] On reset
      - [ ] On lose
 **** TODO Fix resources [0/3] [0%]

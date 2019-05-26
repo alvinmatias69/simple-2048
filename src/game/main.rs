@@ -4,13 +4,13 @@
 use super::board::{Board, BoardInterface};
 use crate::input::Input;
 
-use super::display::board;
-use super::display::config;
-use super::display::header;
+use super::display::{board, config, header, menu};
+
 use event::KeyCode;
 use ggez::{conf, event, graphics, input, timer, Context, ContextBuilder, GameResult};
-use input::keyboard;
+use input::{keyboard, mouse};
 use keyboard::KeyMods;
+use mouse::MouseButton;
 
 pub struct Game {
     board: Board,
@@ -19,6 +19,9 @@ pub struct Game {
     direction: Input,
     width: u32,
     height: u32,
+    win: bool,
+    lose: bool,
+    continue_game: bool,
 }
 
 impl event::EventHandler for Game {
@@ -33,9 +36,8 @@ impl event::EventHandler for Game {
                 Input::Right => direction = Input::Right,
             }
             self.updated = self.board.move_to(direction);
-            if self.board.is_finished() {
-                println!("finished");
-            }
+            self.lose = self.board.is_finished();
+            self.win = self.board.highest_tile > 1024;
         }
 
         Ok(())
@@ -50,8 +52,8 @@ impl event::EventHandler for Game {
             header::draw_score(ctx, self.board.score)?;
             board::draw_board(ctx)?;
             board::draw_tiles(ctx, &self.board.field)?;
-            if self.board.highest_tile > 1024 {
-                println!("win");
+            if self.win && !self.continue_game {
+                menu::draw_win(ctx)?;
             }
         }
 
@@ -69,20 +71,34 @@ impl event::EventHandler for Game {
     ) {
         match keycode {
             KeyCode::Up | KeyCode::K | KeyCode::W => {
-                self.moved = true;
-                self.direction = Input::Up;
+                if !(self.win && !self.continue_game) {
+                    self.moved = true;
+                    self.direction = Input::Up;
+                }
             }
             KeyCode::Down | KeyCode::J | KeyCode::S => {
-                self.moved = true;
-                self.direction = Input::Down;
+                if !(self.win && !self.continue_game) {
+                    self.moved = true;
+                    self.direction = Input::Down;
+                }
             }
             KeyCode::Left | KeyCode::H | KeyCode::A => {
-                self.moved = true;
-                self.direction = Input::Left;
+                if !(self.win && !self.continue_game) {
+                    self.moved = true;
+                    self.direction = Input::Left;
+                }
             }
             KeyCode::Right | KeyCode::L | KeyCode::D => {
-                self.moved = true;
-                self.direction = Input::Right;
+                if !(self.win && !self.continue_game) {
+                    self.moved = true;
+                    self.direction = Input::Right;
+                }
+            }
+            KeyCode::Return => {
+                if self.win && !self.continue_game {
+                    self.continue_game = true;
+                    self.updated = true;
+                }
             }
             KeyCode::Q => {
                 if keymods.contains(KeyMods::CTRL) {
@@ -91,12 +107,24 @@ impl event::EventHandler for Game {
             }
             KeyCode::N => {
                 if keymods.contains(KeyMods::CTRL) {
-                    let board: Board = BoardInterface::new(self.width, self.height);
-                    self.board = board;
-                    self.updated = true;
+                    self.reset(ctx);
                 }
             }
             _ => {}
+        }
+    }
+
+    fn mouse_button_down_event(&mut self, ctx: &mut Context, _button: MouseButton, x: f32, y: f32) {
+        if self.win
+            && !self.continue_game
+            && x >= config::WIN_BUTTON_POSITION.0
+            && x <= config::WIN_BUTTON_POSITION.0 + config::WIN_BUTTON_SIZE.0
+            && y >= config::WIN_BUTTON_POSITION.1
+            && y <= config::WIN_BUTTON_POSITION.1 + config::WIN_BUTTON_SIZE.1
+        {
+            self.continue_game = true;
+            self.updated = true;
+            mouse::set_cursor_hidden(ctx, true);
         }
     }
 }
@@ -111,6 +139,9 @@ impl Game {
             direction: Input::Up,
             width,
             height,
+            win: false,
+            lose: false,
+            continue_game: false,
         };
         game
     }
@@ -140,7 +171,18 @@ impl Game {
             });
 
         let (ref mut ctx, ref mut event_loop) = &mut cb.build().unwrap();
+        mouse::set_cursor_hidden(ctx, true);
         event::run(ctx, event_loop, self).unwrap();
+    }
+
+    fn reset(&mut self, ctx: &mut Context) {
+        let board: Board = BoardInterface::new(self.width, self.height);
+        self.board = board;
+        self.win = false;
+        self.lose = false;
+        self.continue_game = false;
+        self.updated = true;
+        mouse::set_cursor_hidden(ctx, true);
     }
 
     // Debug mode only

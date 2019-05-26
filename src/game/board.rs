@@ -38,7 +38,8 @@ impl BoardInterface for Board {
             highest_tile: 0,
         };
 
-        board.spawn_random_number();
+        // board.spawn_random_number();
+        board.spawn_mock();
         board
     }
 
@@ -74,6 +75,12 @@ impl BoardInterface for Board {
 }
 
 impl Board {
+    fn spawn_mock(&mut self) {
+        self.field[0][0] = 1024;
+        self.field[0][1] = 1024;
+        self.update_empty();
+    }
+
     fn spawn_random_number(&mut self) {
         let empty: usize;
         if self.empty.len() > 2 {
